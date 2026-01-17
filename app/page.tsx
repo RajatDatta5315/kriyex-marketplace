@@ -1,63 +1,68 @@
-// app/page.tsx
-import { ShieldCheck, Globe, Zap, Code } from 'lucide-react';
+import { UserButton, SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
+import { Shield, MapPin, Zap, ExternalLink } from "lucide-react";
 
-export default function KriyexLanding() {
+export default function Home() {
   return (
-    <div className="bg-[#0d1117] text-[#c9d1d9] min-h-screen font-sans">
-      {/* GitHub Style Header */}
-      <nav className="border-b border-[#30363d] p-4 flex justify-between items-center bg-[#161b22]">
-        <div className="flex items-center gap-2">
-          <div className="bg-white text-black p-1 rounded font-bold text-xs">K</div>
-          <span className="font-semibold text-white">KRIYEX</span>
-          <span className="text-[#8b949e]">/ marketplace</span>
+    <div className="min-h-screen bg-[#0d1117] text-[#c9d1d9]">
+      {/* GitHub-like Navigation */}
+      <nav className="border-b border-[#30363d] bg-[#161b22] px-6 py-3 flex justify-between items-center">
+        <div className="flex items-center gap-4">
+          <div className="font-bold text-white flex items-center gap-2 text-xl">
+             <div className="bg-white text-black px-2 rounded">K</div> KRIYEX
+          </div>
+          <div className="hidden md:block text-[#8b949e] font-mono text-sm">/ agent-marketplace</div>
         </div>
-        <button className="bg-[#238636] text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-[#2ea043]">
-          Connect KRYV ID
-        </button>
+        
+        <div className="flex items-center gap-4">
+          <SignedOut>
+            <SignInButton mode="modal">
+              <button className="bg-[#21262d] border border-[#30363d] px-4 py-1.5 rounded-md text-sm font-medium hover:bg-[#30363d]">Sign in</button>
+            </SignInButton>
+          </SignedOut>
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" />
+          </SignedIn>
+        </div>
       </nav>
 
       {/* Hero Section */}
-      <main className="max-w-6xl mx-auto px-6 py-20">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-bold text-white mb-4 tracking-tight">
-            The Certified Agent Workforce.
-          </h1>
-          <p className="text-xl text-[#8b949e] max-w-2xl mx-auto">
-            Rent, sell, and deploy AI agents verified by <span className="text-blue-400">Vigilis</span> and optimized by <span className="text-purple-400">Velqa</span>.
+      <header className="py-16 px-6 border-b border-[#30363d] bg-gradient-to-b from-[#161b22] to-[#0d1117]">
+        <div className="max-w-5xl mx-auto">
+          <h1 className="text-4xl md:text-6xl font-extrabold text-white mb-4">Software as Labor.</h1>
+          <p className="text-xl text-[#8b949e] mb-8 max-w-2xl">
+            Rent verified AI agents for high-stakes tasks. Verified by <span className="text-blue-400 font-mono">Vigilis</span> and localized via <span className="text-purple-400 font-mono">Velqa</span>.
           </p>
+          <div className="flex gap-3">
+            <button className="bg-[#238636] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#2ea043]">Explore Agents</button>
+            <button className="bg-[#21262d] border border-[#30363d] px-6 py-2 rounded-md font-semibold">List Your Agent</button>
+          </div>
         </div>
+      </header>
 
-        {/* Bento Grid 2.0 - Agent Preview */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="bg-[#161b22] border border-[#30363d] rounded-lg p-5 hover:border-[#8b949e] transition-all group">
-              <div className="flex justify-between items-start mb-4">
-                <h3 className="text-blue-400 font-semibold text-lg cursor-pointer hover:underline">
-                  ComplianceBot-v2.0
-                </h3>
-                <span className="text-[10px] border border-[#238636] text-[#238636] px-2 py-0.5 rounded-full uppercase font-bold">
-                  Verified
-                </span>
-              </div>
-              <p className="text-sm text-[#8b949e] mb-4">
-                Autonomous GDPR audit agent. Optimized for EU-West regions with real-time hallucination checks.
-              </p>
-              <div className="flex gap-4 text-xs text-[#8b949e]">
-                <span className="flex items-center gap-1 text-green-500">
-                   <ShieldCheck size={12}/> 99.8% Trust
-                </span>
-                <span className="flex items-center gap-1">
-                   <Globe size={12}/> Velqa-Geo: EU
-                </span>
-              </div>
-              <div className="mt-6 pt-4 border-t border-[#30363d] flex justify-between">
-                <span className="text-white font-mono">$0.45/hr</span>
-                <button className="text-xs bg-[#21262d] px-3 py-1 rounded border border-[#30363d] hover:bg-[#30363d]">
-                  Rent Agent
-                </button>
-              </div>
+      {/* Marketplace Grid */}
+      <main className="max-w-6xl mx-auto p-6">
+        <div className="flex items-center gap-2 mb-6">
+           <Zap className="text-yellow-500" size={18} />
+           <h2 className="text-lg font-semibold text-white">Featured Repositories</h2>
+        </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {/* Agent Card Example */}
+          <div className="border border-[#30363d] rounded-md p-4 bg-[#0d1117] hover:bg-[#161b22] transition-colors">
+            <div className="flex justify-between mb-2">
+              <span className="text-blue-400 font-bold flex items-center gap-1 cursor-pointer">
+                FinanceAudit-GPT <ExternalLink size={14}/>
+              </span>
+              <span className="text-[10px] text-green-400 border border-green-400 px-2 py-0.5 rounded-full uppercase">Vigilis-Certified</span>
             </div>
-          ))}
+            <p className="text-sm text-[#8b949e] mb-4">Deep analysis of balance sheets with 0% hallucination rate.</p>
+            <div className="flex gap-4 text-xs font-mono text-[#8b949e]">
+               <span className="flex items-center gap-1"><Shield size={12}/> 99.9%</span>
+               <span className="flex items-center gap-1"><MapPin size={12}/> Velqa-US</span>
+               <span className="text-white">$0.80/hr</span>
+            </div>
+          </div>
+          {/* Repeat for more cards */}
         </div>
       </main>
     </div>
