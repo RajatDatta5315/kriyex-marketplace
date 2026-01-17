@@ -6,16 +6,22 @@ export async function GET() {
   if (!userId) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
   try {
-    // 1. Clerk se user ka GitHub Token nikalna
     const client = await clerkClient();
+    // User ka GitHub token fetch kar rahe hain
     const tokenResponse = await client.users.getUserOauthAccessToken(userId, 'oauth_github');
     
+    // Yahan hum sirf logged-in user ka token nikal rahe hain
     const token = tokenResponse.data[0]?.token;
-    if (!token) return NextResponse.json({ error: "No GitHub Token found" }, { status: 400 });
+    if (!token) {
+      return NextResponse.json({ error: "Please reconnect GitHub" }, { status: 400 });
+    }
 
-    // 2. GitHub API se Repos mangwana
-    const response = await fetch('https://api.github.com/user/repos?sort=updated', {
-      headers: { Authorization: `Bearer ${token}` }
+    // GitHub API ko call kar rahe hain (Only for the current user)
+    const response = await fetch('https://api.github.com/user/repos?sort=updated&per_page=10', {
+      headers: { 
+        Authorization: `Bearer ${token}`,
+        "Accept": "application/vnd.github.v3+json"
+      }
     });
 
     const repos = await response.json();
