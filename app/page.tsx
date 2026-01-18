@@ -1,5 +1,6 @@
+"use client";
 import Link from "next/link";
-import AgentCard from "@/components/AgentCard";
+import AgentCard from "../components/AgentCard";
 
 export default function Home() {
   return (
@@ -21,7 +22,7 @@ export default function Home() {
         </div>
       </div>
 
-      <div id="explore" className="w-full flex flex-col items-center gap-6">
+      <div id="explore" className="w-full flex flex-col items-center gap-6 pb-20">
         <h2 className="text-xl font-bold text-white mb-4">Featured Agents</h2>
         <AgentCard name="Finance Audit Bot" desc="Analyze crypto wallets & transactions" price="12.00" />
         <AgentCard name="Social Sentinel" desc="KRYV social sentiment analysis" price="8.00" />
