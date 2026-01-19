@@ -1,32 +1,32 @@
-import { CheckCircle, Terminal, ArrowRight } from "lucide-react";
-import Link from "next/link";
+"use client";
+import { useEffect, useState } from "react";
 
 export default function SuccessPage() {
+  const [key, setKey] = useState("Generating...");
+
+  useEffect(() => {
+    // Yahan hum API hit karenge jo payment verify karke key generate karega
+    setTimeout(() => {
+      setKey("KRYV-" + Math.random().toString(36).substr(2, 9).toUpperCase());
+    }, 2000);
+  }, []);
+
   return (
-    <div className="min-h-screen bg-[#0d1117] flex items-center justify-center p-6">
-      <div className="max-w-md w-full bg-[#161b22] border border-[#30363d] rounded-xl p-8 text-center">
-        <div className="flex justify-center mb-6">
-          <div className="bg-[#23863622] p-4 rounded-full">
-            <CheckCircle size={48} className="text-[#238636]" />
-          </div>
-        </div>
-        <h1 className="text-2xl font-bold text-white mb-2">Payment Successful!</h1>
-        <p className="text-[#8b949e] mb-8">
-          Aapka AI Agent ab deploy ho chuka hai aur KRIYEX infrastructure pe live hai.
-        </p>
+    <div className="flex flex-col items-center justify-center min-h-[70vh] text-center px-4">
+      <div className="bg-[#161b22] p-8 rounded-2xl border border-[#238636] max-w-md w-full">
+        <h1 className="text-3xl font-bold text-white mb-4">Payment Successful! 🎉</h1>
+        <p className="text-[#8b949e] mb-6">Your AI Agent is ready. Use the key below to access the dashboard.</p>
         
-        <div className="bg-black rounded-lg p-4 mb-8 text-left font-mono text-sm border border-[#30363d]">
-          <div className="text-[#8b949e] flex items-center gap-2 mb-2">
-            <Terminal size={14} /> Status: <span className="text-green-400">Active</span>
-          </div>
-          <div className="text-[#8b949e]">Access Token: <span className="text-blue-400">KRYX_829...</span></div>
+        <div className="bg-[#0d1117] p-4 rounded-lg border border-[#30363d] mb-6">
+          <code className="text-[#2ea043] font-mono font-bold text-lg">{key}</code>
         </div>
 
-        <Link href="/dashboard">
-          <button className="w-full bg-[#238636] text-white py-2 rounded-md font-semibold flex items-center justify-center gap-2 hover:bg-[#2ea043]">
-            Go to Agent Dashboard <ArrowRight size={18} />
-          </button>
-        </Link>
+        <button 
+          onClick={() => window.location.href = "/dashboard"}
+          className="w-full bg-[#238636] text-white py-3 rounded-lg font-bold hover:bg-[#2ea043]"
+        >
+          Go to Dashboard
+        </button>
       </div>
     </div>
   );
