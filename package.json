@@ -17,6 +17,8 @@
     "stripe": "latest",
     "@libsql/client": "latest",
     "clsx": "latest",
+    "@uploadthing/react": "^6.2.2",
+    "uploadthing": "^6.3.3",
     "tailwind-merge": "latest"
   },
   "devDependencies": {
