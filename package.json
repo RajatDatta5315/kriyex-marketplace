@@ -19,6 +19,7 @@
     "clsx": "latest",
     "@uploadthing/react": "^6.2.2",
     "uploadthing": "^6.3.3",
+    "@supabase/supabase-js": "^2.39.7",
     "tailwind-merge": "latest"
   },
   "devDependencies": {
