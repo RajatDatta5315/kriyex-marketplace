@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import Navbar from "@/components/Navbar";
+// Path fix: Using relative path to find components
+import Navbar from "../components/Navbar"; 
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,12 +29,7 @@ export default function RootLayout({
                 "@type": "SoftwareApplication",
                 "name": "KRIYEX AI Marketplace",
                 "operatingSystem": "Web",
-                "applicationCategory": "DeveloperApplication",
-                "offers": {
-                  "@type": "Offer",
-                  "price": "10.00",
-                  "priceCurrency": "USD"
-                }
+                "applicationCategory": "DeveloperApplication"
               }),
             }}
           />
