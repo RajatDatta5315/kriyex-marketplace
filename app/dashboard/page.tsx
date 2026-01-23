@@ -1,86 +1,82 @@
 "use client";
 import { useState } from "react";
 
-export default function BuyerDashboard() {
+export default function JarvisDashboard() {
   const [key, setKey] = useState("");
   const [verified, setVerified] = useState(false);
-  const [messages, setMessages] = useState([{ role: "agent", text: "Hello! I am your rented AI Agent. How can I assist you today?" }]);
-  const [input, setInput] = useState("");
+  const [apiKeys, setApiKeys] = useState({ groq: "", claude: "", openai: "" });
 
   const verifyKey = () => {
-    // Basic frontend check for now
-    if (key.startsWith("KRYV-")) {
-      setVerified(true);
-    } else {
-      alert("Invalid Access Key!");
-    }
-  };
-
-  const handleSend = () => {
-    if (!input.trim()) return;
-    setMessages([...messages, { role: "user", text: input }]);
-    setInput("");
-    // Future: Add Groq API call here for agent response
-    setTimeout(() => {
-      setMessages(prev => [...prev, { role: "agent", text: "I have received your request. My brain (Groq) is being connected in Phase 2!" }]);
-    }, 1000);
+    if (key.startsWith("KRYV-")) setVerified(true);
+    else alert("Invalid Command Key!");
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-12 px-4 min-h-screen">
+    <div className="min-h-screen bg-black text-white p-6 selection:bg-cyan-500/30">
       {!verified ? (
-        <div className="bg-[#161b22] p-10 rounded-3xl border border-[#30363d] text-center shadow-2xl mt-10">
-          <div className="w-16 h-16 bg-green-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg className="w-8 h-8 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+        <div className="max-w-md mx-auto mt-32 bg-[#0A0A0A] border border-cyan-500/20 p-10 rounded-[2.5rem] text-center shadow-[0_0_100px_rgba(6,182,212,0.1)]">
+          <div className="w-24 h-24 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full mx-auto mb-8 animate-spin flex items-center justify-center">
+            <div className="w-16 h-16 bg-cyan-500/10 rounded-full animate-pulse"></div>
           </div>
-          <h1 className="text-3xl font-bold text-white mb-2">Buyer Access</h1>
-          <p className="text-[#8b949e] mb-8">Enter the KRYV key you received after purchase.</p>
+          <h1 className="text-2xl font-black italic tracking-tighter mb-6 uppercase">Initialize Interface</h1>
           <input 
-            type="text" 
-            placeholder="KRYV-XXXXXXXX" 
-            className="w-full bg-[#0d1117] border border-[#30363d] p-4 rounded-xl text-white mb-6 text-center font-mono text-lg focus:border-green-500 outline-none transition"
+            type="text" placeholder="ENTER ACCESS KEY" 
+            className="w-full bg-transparent border-b-2 border-white/10 p-4 text-center font-mono text-cyan-400 outline-none focus:border-cyan-500 transition-all mb-8"
             onChange={(e) => setKey(e.target.value)}
           />
-          <button onClick={verifyKey} className="w-full bg-green-600 hover:bg-green-500 text-white py-4 rounded-xl font-bold text-lg transition shadow-lg shadow-green-900/20">
-            Verify & Start Agent
-          </button>
+          <button onClick={verifyKey} className="w-full bg-cyan-500 text-black py-4 rounded-xl font-black uppercase tracking-widest hover:bg-white transition-all">Execute Login</button>
         </div>
       ) : (
-        <div className="space-y-6 animate-in fade-in duration-500">
-          <div className="flex justify-between items-center bg-[#161b22] p-6 rounded-2xl border border-[#30363d]">
-            <div>
-              <h1 className="text-2xl font-bold text-white">Active Agent Dashboard</h1>
-              <p className="text-sm text-green-500">Status: Online & Rented</p>
+        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 pt-10">
+          {/* Left Panel: Arc Reactor Identity */}
+          <div className="lg:col-span-1 space-y-6">
+            <div className="bg-[#0A0A0A] border border-white/5 p-10 rounded-[3rem] text-center relative overflow-hidden">
+               {/* Pulse Animation */}
+              <div className="absolute inset-0 bg-cyan-500/5 animate-pulse"></div>
+              <div className="relative z-10">
+                <div className="w-40 h-40 rounded-full border-8 border-white/5 border-t-cyan-500 mx-auto mb-6 animate-[spin_10s_linear_infinite] flex items-center justify-center shadow-[0_0_50px_rgba(6,182,212,0.2)]">
+                  <div className="w-28 h-28 bg-gradient-to-tr from-cyan-600 to-blue-400 rounded-full shadow-inner flex items-center justify-center">
+                    <span className="text-4xl font-black text-black italic">KX</span>
+                  </div>
+                </div>
+                <h2 className="text-xl font-black italic tracking-tighter">AGENT ONLINE</h2>
+                <p className="text-gray-500 text-[10px] mt-2 tracking-[0.3em] font-mono">ENCRYPTED CONNECTION : ACTIVE</p>
+              </div>
             </div>
-            <div className="text-right">
-              <span className="text-xs text-[#8b949e] block">Access Key</span>
-              <code className="text-white text-xs bg-[#0d1117] px-2 py-1 rounded border border-[#30363d]">{key}</code>
+            
+            {/* API Key Plate */}
+            <div className="bg-[#0A0A0A] border border-white/5 p-8 rounded-[2rem] space-y-4">
+              <h3 className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-4">Neural Config (API Keys)</h3>
+              <input type="password" placeholder="GROQ API KEY" className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-xs font-mono focus:border-cyan-500 outline-none" 
+                onChange={(e) => setApiKeys({...apiKeys, groq: e.target.value})} />
+              <input type="password" placeholder="CLAUDE API KEY" className="w-full bg-white/5 border border-white/10 p-4 rounded-xl text-xs font-mono focus:border-cyan-500 outline-none" 
+                onChange={(e) => setApiKeys({...apiKeys, claude: e.target.value})} />
+              <button className="w-full bg-white text-black py-3 rounded-xl font-bold text-xs hover:bg-cyan-400 transition-all">Save Neural Path</button>
             </div>
           </div>
 
-          <div className="bg-[#161b22] rounded-2xl border border-[#30363d] h-[500px] flex flex-col shadow-xl">
-            <div className="flex-1 overflow-y-auto p-6 space-y-4">
-              {messages.map((m, i) => (
-                <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[80%] p-4 rounded-2xl text-sm ${m.role === 'user' ? 'bg-green-600 text-white rounded-tr-none' : 'bg-[#0d1117] text-[#c9d1d9] border border-[#30363d] rounded-tl-none'}`}>
-                    {m.text}
-                  </div>
-                </div>
-              ))}
+          {/* Right Panel: Terminal Data Stream */}
+          <div className="lg:col-span-2 bg-[#0A0A0A] border border-white/5 rounded-[3rem] p-8 flex flex-col h-[700px] shadow-2xl">
+            <div className="flex justify-between items-center mb-6 border-b border-white/5 pb-4">
+              <div className="flex gap-2">
+                <div className="w-2 h-2 rounded-full bg-red-500"></div>
+                <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                <div className="w-2 h-2 rounded-full bg-green-500"></div>
+              </div>
+              <span className="text-[10px] font-mono text-gray-500">ROOT@KRIYEX_MARKETPLACE:~#</span>
             </div>
-            
-            <div className="p-4 bg-[#0d1117] border-t border-[#30363d] rounded-b-2xl flex gap-3">
-              <input 
-                type="text" 
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                placeholder="Talk to your agent..." 
-                className="flex-1 bg-[#161b22] border border-[#30363d] p-4 rounded-xl text-white outline-none focus:border-green-500" 
-              />
-              <button onClick={handleSend} className="bg-green-600 px-6 py-4 rounded-xl font-bold text-white hover:bg-green-500 transition">
-                Send
-              </button>
+            <div className="flex-1 font-mono text-sm text-cyan-400/80 space-y-2 overflow-y-auto custom-scrollbar">
+              <p>{">"} INITIALIZING BOOT SEQUENCE...</p>
+              <p>{">"} CONNECTING TO REPOSITORY CORE...</p>
+              <p>{">"} ANALYZING NEURAL SCHEMATICS...</p>
+              <p className="text-white">{">"} ACCESS GRANTED. SYSTEM READY FOR INPUT.</p>
+              <div className="pt-10">
+                <p className="text-gray-600 italic">// Insert your brain key to start autonomous processing.</p>
+              </div>
+            </div>
+            <div className="mt-6 flex gap-3">
+              <input type="text" placeholder="EXECUTE COMMAND..." className="flex-1 bg-white/5 border border-white/10 p-5 rounded-2xl outline-none focus:border-cyan-500 font-mono text-xs" />
+              <button className="bg-cyan-500 text-black px-10 rounded-2xl font-black uppercase text-xs">Run</button>
             </div>
           </div>
         </div>
