@@ -1,57 +1,55 @@
 import os
 import requests
 import json
-from atproto import Client, models
+from atproto import Client
 
-# Secrets from GitHub
 GROQ_KEY = os.getenv("GROQ_KEY")
 BSKY_HANDLE = os.getenv("BSKY_HANDLE")
 BSKY_PASS = os.getenv("BSKY_PASS")
 MAST_TOKEN = os.getenv("MASTODON_TOKEN")
 MAST_INSTANCE = "https://mastodon.social"
 
-def get_ai_content(prompt):
+def get_ai_response(system_prompt, user_input):
     res = requests.post(
         "https://api.groq.com/openai/v1/chat/completions",
         headers={"Authorization": f"Bearer {GROQ_KEY}"},
         json={
             "model": "mixtral-8x7b-32768",
-            "messages": [{"role": "user", "content": prompt}]
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_input}
+            ]
         }
     )
     return res.json()['choices'][0]['message']['content']
 
-def post_to_social():
-    # 1. Generate Insightful Post
-    post_text = get_ai_content("Write a 1-sentence thought about AI agents monetization. High value, no hashtags.")
-    full_post = f"{post_text}\n\nBuild & Rent Agents: https://kriyex.kryv.network"
+def marketing_run():
+    # 1. Post Content (3 per day total - handled by cron schedule)
+    post_prompt = "Write a high-value, futuristic tip for devs using AI agents. Keep it under 200 chars. No hashtags."
+    daily_post = get_ai_response("You are an AI SaaS Founder.", post_prompt)
+    
+    # Bluesky Post
+    bsky = Client()
+    bsky.login(BSKY_HANDLE, BSKY_PASS)
+    bsky.send_post(text=f"{daily_post} #BuildInPublic")
 
-    # Post to Bluesky
-    client = Client()
-    client.login(BSKY_HANDLE, BSKY_PASS)
-    client.send_post(text=full_post)
-
-    # Post to Mastodon
+    # Mastodon Post
     requests.post(f"{MAST_INSTANCE}/api/v1/statuses", 
                   headers={"Authorization": f"Bearer {MAST_TOKEN}"},
-                  data={"status": full_post})
+                  data={"status": daily_post})
 
-def reply_engine():
-    # Ye 10 comments har session mein karega (Din mein 3 session = 30 replies)
-    topics = ["AI Agents", "Passive Income", "SaaS", "Open Source"]
-    for topic in topics[:3]:
-        # Context building
-        context = get_ai_content(f"Analyze this topic: {topic}. Give a 1-sentence smart reply to someone talking about it.")
-        reply_text = f"{context} This is why we built KRIYEX."
+    # 2. Contextual Replies (10 replies per session = 30 total)
+    # Search for relevant posts (Simple simulation for brevity)
+    topics = ["AI Agents", "Python Dev", "Open Source", "SaaS Growth"]
+    for topic in topics:
+        # Step: Analyze & Reply
+        post_to_reply = f"I think AI agents are overrated..." # Simulated search result
+        reply_prompt = f"Analyze this user post: '{post_to_reply}'. Write a short, contextual, and slightly spicy reply mentioning KRIYEX without being spammy."
+        smart_reply = get_ai_response("You are a helpful peer in the AI community.", reply_prompt)
         
-        # Mastodon Public Timeline se context lena mushkil hai, toh hum 'Search' ke results pe reply karenge
-        # Note: Production mein yahan specific ID fetch karke reply_to_id lagta hai. 
-        # Abhi ke liye ye direct post karega taaki reach badhe.
-        requests.post(f"{MAST_INSTANCE}/api/v1/statuses", 
-                      headers={"Authorization": f"Bearer {MAST_TOKEN}"},
-                      data={"status": f"@{topic}_fan {reply_text}"})
+        # Post the smart reply to Mastodon/BSKY (Simplified)
+        print(f"Replying to {topic}: {smart_reply}")
+        # In real logic, you'd fetch IDs and post as a thread reply
 
 if __name__ == "__main__":
-    post_to_social()
-    reply_engine()
-    print("Promotion Cycle Complete!")
+    marketing_run()
