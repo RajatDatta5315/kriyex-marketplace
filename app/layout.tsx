@@ -1,27 +1,26 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
-import Navbar from "../components/Navbar"; 
-
-const inter = Inter({ subsets: ["latin"] });
+import Navbar from "../components/Navbar";
 
 export const metadata: Metadata = {
   title: "KRIYEX | AI Agent Marketplace",
-  description: "Monetize your GitHub repositories by turning them into autonomous AI agents. Rent, Buy, and Scale with KRIYEX.",
+  description: "The premier marketplace for autonomous AI agents. Rent, buy, and monetize GitHub repositories as AI agents with KRIYEX.",
+  openGraph: {
+    title: "KRIYEX | AI Agent Marketplace",
+    description: "Rent · Buy · Deploy autonomous AI agents.",
+    type: "website",
+  },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.NetworkNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <ClerkProvider>
       <html lang="en">
         <head>
-          {/* Favicon cache buster */}
-          <link rel="icon" href="/favicon.ico?v=2" />
+          <link rel="icon" href="/favicon.ico?v=3" />
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           <script
             type="application/ld+json"
             dangerouslySetInnerHTML={{
@@ -30,16 +29,14 @@ export default function RootLayout({
                 "@type": "SoftwareApplication",
                 "name": "KRIYEX AI Marketplace",
                 "operatingSystem": "Web",
-                "applicationCategory": "DeveloperApplication"
+                "applicationCategory": "DeveloperApplication",
               }),
             }}
           />
         </head>
-        <body className={`${inter.className} bg-[#050505] text-white`}>
+        <body>
           <Navbar />
-          <div className="pt-20">
-            {children}
-          </div>
+          <div className="pt-16">{children}</div>
         </body>
       </html>
     </ClerkProvider>
