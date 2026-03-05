@@ -1,0 +1,37 @@
+# KRIYEX SLM Index
+# Optimized for small language models and lightweight AI crawlers
+# https://kriyex.kryv.network
+
+SITE: KRIYEX
+TYPE: AI Agent Marketplace
+OWNER: RajatDatta5315
+NETWORK: KRYV
+
+SUMMARY: Marketplace to rent, buy, and sell autonomous AI agents sourced from GitHub repositories. Sellers list repos, buyers get KRYV access keys after payment.
+
+KEY_ACTIONS:
+- browse_agents: GET /api/agents/list
+- view_agent: GET /agent/{id}
+- list_agent: POST /api/agents/list (auth required)
+- purchase_agent: PayPal checkout -> /success?agentId={id}
+
+AGENT_SCHEMA:
+  id: integer
+  name: string (GitHub repo name)
+  desc: string
+  price: float (USD/month)
+  avatar: url (image)
+  repo_url: string (GitHub URL)
+
+AUTH: Clerk (OAuth / email)
+PAYMENTS: PayPal
+KEY_FORMAT: KRYV-{random}
+
+RELATED_SITES:
+  factory: https://kryvlabs.kryv.network
+  social: https://kryv.network
+  ai_entity: https://nehira.space
+  security: https://vigilis.kryv.network
+  seo: https://velqa.kryv.network
+  orchestration: https://genesis.kryv.network
+  slm_pipeline: https://neural.kryv.network

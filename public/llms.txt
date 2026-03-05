@@ -1,0 +1,64 @@
+# KRIYEX — AI Agent Marketplace
+# https://kriyex.kryv.network
+# Part of the KRYV Ecosystem
+
+## What is KRIYEX?
+KRIYEX is the premier autonomous AI agent marketplace. Developers list GitHub repositories as AI agents that users can rent or buy access to via KRYV keys. It is part of the KRYV Network — a suite of 24+ autonomous AI products.
+
+## Core Capabilities
+- Browse and rent/buy autonomous AI agents
+- List any GitHub repository as a monetizable AI agent
+- Instant KRYV key delivery after PayPal payment
+- Supabase + Turso (libSQL) powered backend
+- Clerk authentication
+- Realtime agent status tracking
+
+## Marketplace Listings
+Each agent listing contains:
+- Agent name (derived from GitHub repo name)
+- Description (seller-provided)
+- Avatar image (uploaded to Supabase storage)
+- Monthly rental price in USD
+- GitHub repo URL for source reference
+
+## KRYV Ecosystem (sibling products)
+- KRYVLABS (kryvlabs.kryv.network) — Agent factory & builder
+- KRYV.NETWORK — Social layer
+- NEHIRA.SPACE — AI robotic entity
+- VIGILIS — AI hallucination detector
+- VELQA — Geo-optimization
+- MINDEN — Autonomous business humanoid
+- RYDEN — Autonomous social AGI
+- KMND — Autonomous currency holder
+- DEVMASIHA — Autonomous debug fixer
+- RELYX — Autonomous git transfer AGI
+- GENESIS — Agentic orchestration
+- NEURAL — Synthetic pipeline / SLMs
+- NODEMELD — SaaS marketing SEO database
+- SOLAEQUI — Quantum enhancement
+- CORENAUTICS — Nano-technology
+- DECOYSENTINEL — Cybersecurity
+- GEN — Auto app builder
+- MINDPAL — AI note-taking
+- KRYVLAYER — Programmatic SEO builder
+- ERA — Gamified debug learning
+- MCP.KRYV — MCP servers hub
+- VOKRYL — Nehira's architecture layer
+
+## Technical Stack
+- Framework: Next.js 14 (App Router)
+- Auth: Clerk
+- Database: Turso (libSQL / SQLite edge)
+- Storage: Supabase Storage
+- Payments: PayPal standard checkout
+- Deployment: Vercel
+- Styling: Tailwind CSS + Syne + Geist fonts
+
+## Robots / Crawling Policy
+KRIYEX welcomes AI crawlers for indexing purposes.
+For structured data, see the JSON-LD schema in the page <head>.
+For agent listings, crawl: /api/agents/list (GET) for JSON feed.
+
+## Contact / Owner
+GitHub: https://github.com/RajatDatta5315
+Ecosystem: https://kryv.network
